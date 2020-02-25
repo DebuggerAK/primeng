@@ -1,7 +1,7 @@
-import {NgModule,Component,ElementRef,AfterViewInit,Input,Output,EventEmitter,ContentChild,OnChanges,forwardRef} from '@angular/core';
+import {NgModule,Component,ElementRef,AfterViewInit,Input,Output,EventEmitter,ContentChild,forwardRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SharedModule,Header} from '../common/shared'
-import {DomHandler} from '../dom/domhandler';
+import {SharedModule,Header} from 'primeng/api'
+import {DomHandler} from 'primeng/dom';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import * as Quill from "quill";
 
@@ -70,7 +70,7 @@ export class Editor implements AfterViewInit,ControlValueAccessor {
     
     @Output() onSelectionChange: EventEmitter<any> = new EventEmitter();
     
-    @ContentChild(Header, { static: false }) toolbar;
+    @ContentChild(Header, { static: true }) toolbar;
     
     @Input() style: any;
         
@@ -119,7 +119,7 @@ export class Editor implements AfterViewInit,ControlValueAccessor {
           scrollingContainer: this.scrollingContainer
         });
                 
-        if(this.value) {
+        if (this.value) {
             this.quill.pasteHTML(this.value);
         }
         
@@ -159,8 +159,8 @@ export class Editor implements AfterViewInit,ControlValueAccessor {
     writeValue(value: any) : void {
         this.value = value;
                 
-        if(this.quill) {
-            if(value)
+        if (this.quill) {
+            if (value)
                 this.quill.pasteHTML(value);
             else
                 this.quill.setText('');
@@ -186,8 +186,8 @@ export class Editor implements AfterViewInit,ControlValueAccessor {
     set readonly(val:boolean) {
         this._readonly = val;
         
-        if(this.quill) {
-            if(this._readonly)
+        if (this.quill) {
+            if (this._readonly)
                 this.quill.disable();
             else
                 this.quill.enable();

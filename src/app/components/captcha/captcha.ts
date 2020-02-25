@@ -5,7 +5,7 @@ import {CommonModule} from '@angular/common';
     selector: 'p-captcha',
     template: `<div></div>`
 })
-export class Captcha implements AfterViewInit {
+export class Captcha implements AfterViewInit,OnDestroy {
 
     @Input() siteKey: string = null;
         
@@ -30,13 +30,13 @@ export class Captcha implements AfterViewInit {
     constructor(public el: ElementRef, public _zone: NgZone) {}
     
     ngAfterViewInit() {
-        if((<any>window).grecaptcha) {
+        if ((<any>window).grecaptcha) {
             if (!(<any>window).grecaptcha.render){
                 setTimeout(() =>{
                     this.init();
                 },100)
             }
-            else{
+            else {
                 this.init();
             }
         }
@@ -61,7 +61,7 @@ export class Captcha implements AfterViewInit {
     }
     
     reset() {
-        if(this._instance === null)
+        if (this._instance === null)
             return;
         
         (<any>window).grecaptcha.reset(this._instance);

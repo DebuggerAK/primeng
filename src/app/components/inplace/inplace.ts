@@ -1,6 +1,6 @@
 import {NgModule,Component,Input,Output,EventEmitter} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ButtonModule} from '../button/button';
+import {ButtonModule} from 'primeng/button';
 
 @Component({
     selector: 'p-inplaceDisplay',
@@ -18,7 +18,7 @@ export class InplaceContent {}
     selector: 'p-inplace',
     template: `
         <div [ngClass]="{'ui-inplace ui-widget': true, 'ui-inplace-closable': closable}" [ngStyle]="style" [class]="styleClass">
-            <div class="ui-inplace-display" (click)="activate($event)"
+            <div class="ui-inplace-display" (click)="activate($event)" tabindex="0" (keydown)="onKeydown($event)"   
                 [ngClass]="{'ui-state-disabled':disabled}" *ngIf="!active">
                 <ng-content select="[pInplaceDisplay]"></ng-content>
             </div>
@@ -47,18 +47,25 @@ export class Inplace {
 
     hover: boolean;
 
-    activate(event) {
-        if(!this.disabled) {
+    activate(event?: Event) {
+        if (!this.disabled) {
             this.active = true;
             this.onActivate.emit(event);
         }
     }
 
-    deactivate(event) {
-        if(!this.disabled) {
+    deactivate(event?: Event) {
+        if (!this.disabled) {
             this.active = false;
             this.hover = false;
             this.onDeactivate.emit(event);
+        }
+    }
+
+    onKeydown(event: KeyboardEvent) {
+        if (event.which === 13) {
+            this.activate(event);
+            event.preventDefault();
         }
     }
 }

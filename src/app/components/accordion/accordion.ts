@@ -1,9 +1,9 @@
 import { NgModule, Component, ElementRef, AfterContentInit, OnDestroy, Input, Output, EventEmitter, 
-    ContentChildren, QueryList, ChangeDetectorRef, Inject, forwardRef, TemplateRef} from '@angular/core';
+    ContentChildren, QueryList, ChangeDetectorRef, Inject, forwardRef, TemplateRef, ViewRef} from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { SharedModule, Header, PrimeTemplate } from '../common/shared';
-import { BlockableUI } from '../common/blockableui';
+import { SharedModule, Header, PrimeTemplate } from 'primeng/api';
+import { BlockableUI } from 'primeng/api';
 import { Subscription } from 'rxjs';
 
 let idx: number = 0;
@@ -23,7 +23,7 @@ let idx: number = 0;
         </div>
         <div [attr.id]="id + '-content'" class="ui-accordion-content-wrapper" [@tabContent]="selected ? {value: 'visible', params: {transitionParams: animating ? transitionOptions : '0ms', height: '*'}} : {value: 'hidden', params: {transitionParams: transitionOptions, height: '0'}}" (@tabContent.done)="onToggleDone($event)"
             [ngClass]="{'ui-accordion-content-wrapper-overflown': !selected||animating}" 
-            role="tabpanel" [attr.aria-hidden]="!selected" [attr.aria-labelledby]="id">
+            role="region" [attr.aria-hidden]="!selected" [attr.aria-labelledby]="id">
             <div class="ui-accordion-content ui-widget-content">
                 <ng-content></ng-content>
                 <ng-container *ngIf="contentTemplate && (cache ? loaded : selected)">
@@ -53,8 +53,6 @@ export class AccordionTab implements OnDestroy {
 
     @Input() header: string;
 
-    @Input() selected: boolean;
-
     @Input() disabled: boolean;
 
     @Input() cache: boolean = true;
@@ -67,14 +65,31 @@ export class AccordionTab implements OnDestroy {
 
     @ContentChildren(PrimeTemplate) templates: QueryList<any>;
 
+    private _selected: boolean;
+
     private _animating: boolean;
+
+    @Input() get selected(): any {
+        return this._selected;
+    }
+
+    set selected(val: any) {
+        this._selected = val;
+        
+        if (!this.loaded) {
+            this.changeDetector.detectChanges();
+        }
+    }
 
     get animating(): boolean {
         return this._animating;
     }
     set animating(val: boolean) {
         this._animating = val;
-        this.changeDetector.detectChanges();
+
+        if (!(this.changeDetector as ViewRef).destroyed) {
+            this.changeDetector.detectChanges();
+        }
     }
 
     contentTemplate: TemplateRef<any>;

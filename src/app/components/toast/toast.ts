@@ -1,9 +1,9 @@
 import {NgModule,Component,Input,Output,OnInit,AfterViewInit,AfterContentInit,OnDestroy,ElementRef,ViewChild,EventEmitter,ContentChildren,QueryList,TemplateRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Message} from '../common/message';
-import {DomHandler} from '../dom/domhandler';
-import {PrimeTemplate,SharedModule} from '../common/shared';
-import {MessageService} from '../common/messageservice';
+import {Message} from 'primeng/api';
+import {DomHandler} from 'primeng/dom';
+import {PrimeTemplate,SharedModule} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 import {Subscription} from 'rxjs';
 import {trigger,state,style,transition,animate,query,animateChild,AnimationEvent} from '@angular/animations';
 
@@ -13,7 +13,7 @@ import {trigger,state,style,transition,animate,query,animateChild,AnimationEvent
         <div #container class="ui-toast-message ui-shadow" [@messageState]="{value: 'visible', params: {showTransitionParams: showTransitionOptions, hideTransitionParams: hideTransitionOptions}}"
             [ngClass]="{'ui-toast-message-info': message.severity == 'info','ui-toast-message-warn': message.severity == 'warn',
                 'ui-toast-message-error': message.severity == 'error','ui-toast-message-success': message.severity == 'success'}"
-                (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+                (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="ui-toast-message-content">
                 <a tabindex="0" class="ui-toast-close-icon pi pi-times" (click)="onCloseIconClick($event)" (keydown.enter)="onCloseIconClick($event)" *ngIf="message.closable !== false"></a>
                 <ng-container *ngIf="!template">
@@ -63,7 +63,7 @@ export class ToastItem implements AfterViewInit, OnDestroy {
 
     @Output() onClose: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('container', { static: false }) containerViewChild: ElementRef;
+    @ViewChild('container', { static: true }) containerViewChild: ElementRef;
 
     timeout: any;
 
@@ -159,7 +159,7 @@ export class Toast implements OnInit,AfterContentInit,OnDestroy {
 
     @Output() onClose: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('container', { static: false }) containerViewChild: ElementRef;
+    @ViewChild('container', { static: true }) containerViewChild: ElementRef;
 
     @ContentChildren(PrimeTemplate) templates: QueryList<any>;
 

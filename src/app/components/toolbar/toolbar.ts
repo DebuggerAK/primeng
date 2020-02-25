@@ -1,11 +1,11 @@
-import {NgModule,Component,Input,Output,EventEmitter,ElementRef} from '@angular/core';
+import {NgModule,Component,Input,ElementRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {BlockableUI} from '../common/blockableui';
+import {BlockableUI} from 'primeng/api';
 
 @Component({
     selector: 'p-toolbar',
     template: `
-        <div [ngClass]="'ui-toolbar ui-widget ui-widget-header ui-corner-all ui-helper-clearfix'" [ngStyle]="style" [class]="styleClass">
+        <div [ngClass]="'ui-toolbar ui-widget ui-widget-header ui-corner-all ui-helper-clearfix'" [ngStyle]="style" [class]="styleClass" role="toolbar">
             <ng-content></ng-content>
         </div>
     `

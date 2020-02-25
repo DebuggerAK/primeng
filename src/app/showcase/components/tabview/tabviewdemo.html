@@ -5,8 +5,8 @@
     </div>
 </div>
 
-<div class="content-section implementation">
-    <p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div [ngClass]="{'news-active': isNewsActive(), 'content-section implementation': true}">
+    <p-toast></p-toast>
 
     <h3 class="first">Default</h3>
     <p-tabView>
@@ -149,7 +149,7 @@ import &#123;TabViewModule&#125; from 'primeng/tabview';
 <pre>
 <code class="language-typescript" pCode ngNonBindable>
 handleClose(e) &#123;
-   if(condition)
+   if (condition)
        e.close();
 &#125;
 </code>
@@ -362,6 +362,24 @@ export class TabViewDemo &#123;
                             <td>any</td>
                             <td>null</td>
                             <td>Advisory information to display in a tooltip on hover.</td>
+                        </tr>
+                        <tr>
+                            <td>tooltipStyleClass</td>
+                            <td>string</td>
+                            <td>null</td>
+                            <td>Style class of the tooltip.</td>
+                        </tr>
+                        <tr>
+                            <td>tooltipPosition</td>
+                            <td>string</td>
+                            <td>top</td>
+                            <td>Position of the tooltip, valid values are right, left, top and bottom.</td>
+                        </tr>
+                        <tr>
+                            <td>tooltipPositionStyle</td>
+                            <td>string</td>
+                            <td>absolute</td>
+                            <td>Type of CSS position.</td>
                         </tr>
                     </tbody>
                 </table>

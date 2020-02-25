@@ -1,11 +1,10 @@
-import {NgModule,Component,ElementRef,Input,Output,OnInit,AfterContentInit,OnDestroy,EventEmitter,TemplateRef,EmbeddedViewRef,ViewContainerRef,
+import {NgModule,Component,ElementRef,Input,Output,AfterContentInit,EventEmitter,TemplateRef,
         Inject,forwardRef,ContentChildren,QueryList} from '@angular/core';
 import {trigger,state,style,transition,animate} from '@angular/animations';
 import {CommonModule} from '@angular/common';
-import {DomHandler} from '../dom/domhandler';
-import {SharedModule} from '../common/shared';
-import {TreeNode} from '../common/treenode';
-import {PrimeTemplate} from '../common/shared';
+import {SharedModule} from 'primeng/api';
+import {TreeNode} from 'primeng/api';
+import {PrimeTemplate} from 'primeng/api';
 
 @Component({
     selector: '[pOrganizationChartNode]',
@@ -92,7 +91,7 @@ export class OrganizationChartNode {
     
     toggleNode(event: Event, node: TreeNode) {
         node.expanded = !node.expanded;
-        if(node.expanded)
+        if (node.expanded)
             this.chart.onNodeExpand.emit({originalEvent: event, node: this.node});
         else
             this.chart.onNodeCollapse.emit({originalEvent: event, node: this.node});
@@ -146,7 +145,7 @@ export class OrganizationChart implements AfterContentInit {
     }
     
     ngAfterContentInit() {
-        if(this.templates.length) {
+        if (this.templates.length) {
             this.templateMap = {};
         }
         
@@ -156,7 +155,7 @@ export class OrganizationChart implements AfterContentInit {
     }
     
     getTemplateForNode(node: TreeNode): TemplateRef<any> {
-        if(this.templateMap)
+        if (this.templateMap)
             return node.type ? this.templateMap[node.type] : this.templateMap['default'];
         else
             return null;
@@ -165,19 +164,19 @@ export class OrganizationChart implements AfterContentInit {
     onNodeClick(event: Event, node: TreeNode) {
         let eventTarget = (<Element> event.target);
         
-        if(eventTarget.className && (eventTarget.className.indexOf('ui-node-toggler') !== -1 || eventTarget.className.indexOf('ui-node-toggler-icon') !== -1)) {
+        if (eventTarget.className && (eventTarget.className.indexOf('ui-node-toggler') !== -1 || eventTarget.className.indexOf('ui-node-toggler-icon') !== -1)) {
             return;
         }
-        else if(this.selectionMode) {
-            if(node.selectable === false) {
+        else if (this.selectionMode) {
+            if (node.selectable === false) {
                 return;
             }
             
             let index = this.findIndexInSelection(node);
             let selected = (index >= 0);
             
-            if(this.selectionMode === 'single') {
-                if(selected) {
+            if (this.selectionMode === 'single') {
+                if (selected) {
                     this.selection = null;
                     this.onNodeUnselect.emit({originalEvent: event, node: node});
                 }
@@ -186,8 +185,8 @@ export class OrganizationChart implements AfterContentInit {
                     this.onNodeSelect.emit({originalEvent: event, node: node});
                 }
             }
-            else if(this.selectionMode === 'multiple') {
-                if(selected) {
+            else if (this.selectionMode === 'multiple') {
+                if (selected) {
                     this.selection = this.selection.filter((val,i) => i!=index);
                     this.onNodeUnselect.emit({originalEvent: event, node: node});
                 }
@@ -204,13 +203,13 @@ export class OrganizationChart implements AfterContentInit {
     findIndexInSelection(node: TreeNode) {
         let index: number = -1;
 
-        if(this.selectionMode && this.selection) {
-            if(this.selectionMode === 'single') {
+        if (this.selectionMode && this.selection) {
+            if (this.selectionMode === 'single') {
                 index = (this.selection == node) ? 0 : - 1;
             }
-            else if(this.selectionMode === 'multiple') {
+            else if (this.selectionMode === 'multiple') {
                 for(let i = 0; i  < this.selection.length; i++) {
-                    if(this.selection[i] == node) {
+                    if (this.selection[i] == node) {
                         index = i;
                         break;
                     }

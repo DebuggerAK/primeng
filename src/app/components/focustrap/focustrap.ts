@@ -1,6 +1,6 @@
 import {NgModule,Directive,ElementRef,HostListener} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DomHandler} from '../dom/domhandler';
+import {DomHandler} from 'primeng/dom';
 
 @Directive({
     selector: '[pFocusTrap]',
@@ -11,8 +11,8 @@ export class FocusTrap {
 
     @HostListener('keydown', ['$event']) 
     onkeydown(e) {
-        if(e.which === 9) {
-            event.preventDefault();
+        if (e.which === 9) {
+            e.preventDefault();
             
             let focusableElements = DomHandler.getFocusableElements(this.el.nativeElement);
 

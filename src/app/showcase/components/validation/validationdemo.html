@@ -5,8 +5,8 @@
     </div>
 </div>
 
-<div class="content-section implementation">
-    <p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div [ngClass]="{'news-active': isNewsActive(), 'content-section implementation': true}">
+    <p-toast></p-toast>
 
     <form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
         <p-panel header="Validate">
@@ -94,7 +94,7 @@
 <code class="language-typescript" pCode ngNonBindable>
 import &#123;Component,OnInit&#125; from '@angular/core';
 import &#123;Validators,FormControl,FormGroup,FormBuilder&#125; from '@angular/forms';
-import &#123;SelectItem&#125; from '../../../components/common/api';
+import &#123;SelectItem&#125; from 'primeng/api';
 import &#123;MessageService&#125; from 'primeng/api';
 
 @Component(&#123;
